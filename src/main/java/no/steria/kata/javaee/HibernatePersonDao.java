@@ -23,17 +23,14 @@ public class HibernatePersonDao implements PersonDao {
         this.sessionFactory = cfg.buildSessionFactory();
     }
 
-    @Override
     public void beginTransaction() {
         getSession().beginTransaction();
     }
 
-    @Override
     public void createPerson(Person person) {
         getSession().save(person);
     }
 
-    @Override
     public void endTransaction(boolean commit) {
         if (commit) {
             getSession().getTransaction().commit();
@@ -43,7 +40,6 @@ public class HibernatePersonDao implements PersonDao {
     }
 
     @SuppressWarnings("unchecked")
-    @Override
     public List<Person> findPeople(String nameQuery) {
         Criteria criteria = getSession().createCriteria(Person.class);
         if (nameQuery != null) {

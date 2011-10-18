@@ -1,0 +1,49 @@
+apply plugin: 'java'
+apply plugin: 'war'
+
+version = "1.0"
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+}
+
+sourceSets {
+  executable
+}
+
+dependencies {
+  
+  providedCompile 'org.eclipse.jetty:jetty-server:7.2.2.v20101205'
+  providedCompile 'org.eclipse.jetty:jetty-plus:7.2.2.v20101205'
+  providedCompile 'javax.servlet:servlet-api:2.5'
+  providedCompile 'com.google.guava:guava:r07'
+  providedCompile 'org.slf4j:slf4j-log4j12:1.4.2'
+  providedCompile 'c3p0:c3p0:0.9.1'
+  providedCompile 'hsqldb:hsqldb:1.8.0.10'
+  
+  compile 'org.apache.velocity:velocity:1.6.4'
+  compile 'joda-time:joda-time:1.6.2'
+  compile 'javassist:javassist:3.4.GA'
+  compile 'org.hibernate:hibernate-annotations:3.4.0.GA'
+
+  testCompile 'junit:junit:4.5'
+  testCompile 'org.seleniumhq.webdriver:webdriver-htmlunit:0.9.7376'
+  testCompile 'org.seleniumhq.webdriver:webdriver-firefox:0.9.7376'
+  testCompile 'net.sourceforge.htmlunit:htmlunit:2.7'
+  testCompile 'org.easytesting:fest-assert:1.2'
+  testCompile 'org.mockito:mockito-all:1.8.0'
+}
+
+war {
+    dependsOn executableClasses
+    from sourceSets.executable.classes
+
+    from { 
+      configurations.providedCompile.collect { zipTree(it) }
+    } 
+
+    manifest { 
+      attributes 'Main-Class': 'no.steria.kata.javaee.main.WebServer' 
+    }
+}

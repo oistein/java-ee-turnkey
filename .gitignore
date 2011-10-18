@@ -1,7 +1,10 @@
 
 /.settings
 /target
+/build
 /.classpath
 /.project
 /velocity.log
 /personweb.properties
+/log4j.properties
+/.gradle
